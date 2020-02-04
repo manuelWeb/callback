@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Déboguer de l’asynchrone dans le navigateur</title>
+</head>
+<body>
+  <h1>Déboguer de l’asynchrone dans le navigateur</h1>
+  <p>Activez le bouton pour déclencher un traitement asynchrone</p>
+
+  <button autofocus id="trigger">Et c’est parti !</button>
+
+  <script>
+    document.getElementById('trigger').addEventListener('click', asyncProcessing)
+
+    function asyncProcessing() {
+      setTimeout(() => {
+        requestAnimationFrame(() => {
+          console.trace('Alors on est où là ?')
+        })
+      }, 0)
+    }
+  </script>
+</body>
+</html>
