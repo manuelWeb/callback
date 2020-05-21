@@ -1,0 +1,3 @@
+# INFOS 
+
+- @see remote folder: /Volumes/service internet$/NEWSLETTERS/NEWSLETTERS-2020/TEMPSL_IDEAL-PRATIQUE/0520/LOCO/NEWS-RECETTE
