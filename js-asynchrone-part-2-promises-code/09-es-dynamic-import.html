@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Promesses dans ES natif : imports dynamiques</title>
+</head>
+<body>
+  <h1>Promesses dans ES natif : imports dynamiques</h1>
+  <p>Ouvrez la console pour voir le résultat</p>
+  <script type="module">
+    import('./08-es-dynamic-import.js')
+      .then(({ default: coolBeans, emoji }) => {
+        coolBeans()
+        console.log(emoji)
+      })
+      .catch((err) => console.warn(err))
+  </script>
+</body>
+</html>

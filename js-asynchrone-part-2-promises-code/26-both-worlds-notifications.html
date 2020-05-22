@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Promesses et callbacks dans les API W3C : Notifications</title>
+</head>
+<body>
+  <h1>Promesses <u>et</u> callbacks dans les API W3C : Notifications</h1>
+  <script>
+    Notification.requestPermission(reportResult).then((result) => {
+      if (result === 'granted') {
+        new Notification('Merci !')
+      }
+    })
+
+    function reportResult(result) {
+      console.log('Résultat de la demande de permission :', result)
+    }
+  </script>
+</body>
+</html>

@@ -6,6 +6,7 @@ function myReadDir(path, callback) {
   readdir(path, (err, names) => {
     if (err) {
       callback(err)
+      // return
       // Oops, on oublie le `return` !
     }
 
@@ -18,6 +19,7 @@ const path = process.argv[2] || process.cwd()
 myReadDir(path, (err, names) => {
   if (err) {
     // On rentrera ici car les erreurs sont bien propagées…
+    // console.warn(Object.entries(err))
     console.warn(err.message)
   } else {
     // …mais on rentrera aussi ici juste après, car `myReadDir` oublie de

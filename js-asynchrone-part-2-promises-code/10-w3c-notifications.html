@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Promesses dans les API W3C : Notifications</title>
+</head>
+<body>
+  <h1>Promesses dans les API W3C : Notifications</h1>
+  <script>
+    Notification.requestPermission().then((result) => {
+      if (result === 'granted') {
+        new Notification('Merci !')
+      }
+    })
+  </script>
+</body>
+</html>
