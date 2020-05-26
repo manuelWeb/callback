@@ -44,17 +44,13 @@ function orderedParallel(tasks, callback) {
     let refCount = refs.length
     let storeRef = []
 
-    console.log('refs.length: %d, coutry: %s, index: %d', refs.length, country, index);
-    console.log(results[index][country]);
+    // console.log('refs.length: %d, coutry: %s, index: %d', refs.length, country, index);
+    // console.log(results[index][country]);
 
 
     refs.map((ref, idx) => {
-      storeRef[idx] = ref
-      if (--refCount === 0) {
-        // results[index][country] = { refCount: refs }
-        console.log(storeRef);
-        results[index][country] = storeRef
-      }
+      // storeRef[idx] = ref
+
       https.get(descriptor[country] + 'boutique/pdtRedirect.aspx?idproduit=' + ref, res => {
         const httpTohttps = res.headers.location.replace(/^http:\/\//i, 'https://');
         let allChunk = ''
@@ -66,16 +62,23 @@ function orderedParallel(tasks, callback) {
           })
           res.on('end', () => {
             const { document } = new JSDOM(allChunk).window;
-            console.log(httpTohttps);
+            // console.log(httpTohttps);
 
-            results[remaining - 1] = {
-              // id: idx,
-              ['pk' + idx]: {
-                link: httpTohttps,
-                lib: document.querySelector('#ctl00_ContentPlaceHolder1_LB_TITRE_PRODUIT').textContent,
-                acc: document.querySelector('#ctl00_ContentPlaceHolder1_LB_SOUS_TITRE_PRODUIT').textContent,
-                price: document.querySelector('#ctl00_ContentPlaceHolder1_LAB_PRIX_PRODUIT').textContent
-              }
+            // results[remaining - 1] = {
+            storeRef[idx] = {
+              id: idx,
+              // ['pk' + idx]: {
+              link: httpTohttps,
+              lib: document.querySelector('#ctl00_ContentPlaceHolder1_LB_TITRE_PRODUIT').textContent,
+              acc: document.querySelector('#ctl00_ContentPlaceHolder1_LB_SOUS_TITRE_PRODUIT').textContent,
+              price: document.querySelector('#ctl00_ContentPlaceHolder1_LAB_PRIX_PRODUIT').textContent
+              // }
+            }
+            if (--refCount === 0) {
+              // results[index][country] = { refCount: refs }
+              results[index][country] = storeRef
+              writeNested(storeRef)
+              // console.log(results[index][country]);
             }
           })
         })
@@ -83,10 +86,12 @@ function orderedParallel(tasks, callback) {
       }).on('error', (e) => callback(e.message));
     })
     // On les range bien à leur position définie.
-    if (--remaining === 0) {
-      callback(null, results)
+    function writeNested(obj) {
+      if (--remaining === 0) {
+        results[index][country] = obj
+        callback(null, results)
+      }
     }
-    console.log(`results${results}`);
 
   }
 }
