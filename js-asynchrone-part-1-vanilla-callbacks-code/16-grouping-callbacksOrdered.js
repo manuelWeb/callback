@@ -14,7 +14,8 @@ orderedParallel(
       console.log(err)
       return
     }
-    console.log('RESULTS:', results)
+    const spread = { fr: { ...results[0].fr }, nl: { ...results[1].nl } }
+    console.log('RESULTS:', spread)
     fs.writeFileSync('./findid.json', JSON.stringify(results, null, 2))
   }
 )
@@ -62,9 +63,7 @@ function orderedParallel(tasks, callback) {
           })
           res.on('end', () => {
             const { document } = new JSDOM(allChunk).window;
-            // console.log(httpTohttps);
 
-            // results[remaining - 1] = {
             storeRef[idx] = {
               id: idx,
               // ['pk' + idx]: {
