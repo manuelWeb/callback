@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Plus de lisibilité avec async/await</title>
+</head>
+<body>
+  <h1>Plus de lisibilité avec <code>async</code>/<code>await</code></h1>
+  <p>Ouvrez la console pour voir le résultat</p>
+  <script>
+    const API_ENDPOINT = 'https://jsonplaceholder.typicode.com'
+
+    loadFirstPostComments()
+
+    function loadFirstPostComments() {
+      let post
+      return Promise.resolve()
+        .then(() => fetch(`${API_ENDPOINT}/posts?userId=1`))
+        .then((res) => res.json())
+        .then((posts) => {
+          post = posts[0]
+          return fetch(`${API_ENDPOINT}/comments?postId=${post.id}`)
+        })
+        .then((res) => res.json())
+        .then((comments) => {
+          console.log(`Article : ${post.title}`)
+          console.log(`Premier commentaire par : ${comments[0].name}`)
+        })
+    }
+  </script>
+</body>
+</html>

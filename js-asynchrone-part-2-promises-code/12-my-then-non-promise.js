@@ -1,0 +1,6 @@
+Promise.resolve(42)
+  .then(console.log)
+  .then(console.log)
+  .then(() => '-')
+  .then((text) => text.repeat(72))
+  .then(console.log)

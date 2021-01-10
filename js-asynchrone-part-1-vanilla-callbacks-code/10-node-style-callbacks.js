@@ -23,5 +23,14 @@ readdir(path, (err, names) => {
       }
       console.log(`${names[0]} fait ${stats.size} octets`)
     })
+    names.map(i => {
+      stat(fullPath, (err, stats) => {
+        if (err) {
+          console.warn(err.message);
+          process.exit(64)
+        }
+        console.log(`${i} fait ${stats.size} octets`);
+      })
+    })
   }
 })
