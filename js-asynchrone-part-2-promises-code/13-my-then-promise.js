@@ -15,22 +15,24 @@ readdir(path)
   .then(stats => {
     const arrayfiles = stats.map(({ ctime, size }, x) => ({
       name: arraynames[x],
-      fullpath: fullpath[x],
-      last_modif: ctime.toLocaleString(),
       size: size,
-      isDir: stats[x].isDirectory()
+      fullpath: fullpath[x],
+      isDir: stats[x].isDirectory(),
+      last_modif: ctime.toLocaleString(),
+      last_modif_: ctime.toLocaleTimeString("en-US", { hour12: false }),
+      last_modif_2: ctime.toLocaleDateString().replace(/\//g, '-'),
+      last_modif_2: ctime.toISOString()
     })
     )
-      .filter(i => {
-        const imDir = ({ isDir, name, ...rest }) => ({ dirname: name, ...rest })
-        i.isDir ? console.log(imDir(i)) : console.log(i);
-        // return i.isDir ? imDir(i) : i
-        // i.isDir && console.log({ i, dir: i.name })
+      .map(i => {
+        const { isDir } = i
+        const imDir = ({ isDir, name, size, ...rest }) => ({ dir: name, ...rest })
+        const imFile = ({ isDir, name, ...rest }) => ({ file: name, ...rest })
+        return isDir ? imDir(i) : imFile(i)
       })
-    // .filter(i => i.isDir && { ...i, i: 'i.name' })
     // .filter(i => !i.isDir)
-    // return arrayfiles
+    return arrayfiles
   })
-  // .then(console.log)
+  .then(console.log)
   .catch(err => console.log(err.message))
   // .then(({ size }) => console.log(`Le premier fichier fait ${size} octets`))
