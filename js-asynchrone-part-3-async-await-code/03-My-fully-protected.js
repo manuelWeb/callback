@@ -6,7 +6,6 @@ const pathfile = process.argv[2] || process.cwd()
 
 async function firstFile(dirpath) {
   const curDir = await readdir(dirpath);
-  // return resolve(curDir[0])
   return join(dirpath, curDir[0])
 }
 
@@ -16,14 +15,7 @@ async function truthySize(path) {
   let fname = fstat.isDirectory() ?
     await firstFile(path).then(path => path.substring(path.lastIndexOf('/') + 1))
     : path.substring(path.lastIndexOf('/') + 1)
-  // console.log(fstat);
-  // console.log(await firstFile(path).then(path => path.substring(path.lastIndexOf('/') + 1)));
-  // console.log(`path: ${path}, isDir: ${fstat.isDirectory()}, firstFile: ${await firstFile(path)}`);
   if (fstat.isDirectory()) fstat = await stat(await firstFile(path))
-  // console.log(resolve(path));
-  // console.log(await firstFile(path));
-  // return fname
-  // return fstat.size
   return { name: fname, size: fstat.size }
 }
 // exec time = id timer
